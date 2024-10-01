@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private User dtoToUser(UserDto userDto){
+    public User dtoToUser(UserDto userDto){
 //        User user=new User();
 //        user.setId(userDto.getId());
 //        user.setName(userDto.getName());
@@ -85,11 +85,10 @@ public class UserServiceImpl implements UserService {
 //        user.setAbout(userDto.getAbout());
 
         User user=modelMapper.map(userDto,User.class);
-
         return user;
     }
 
-    private UserDto userToDto(User user){
+    public UserDto userToDto(User user){
 //        UserDto userDto=new UserDto();
 //        userDto.setId(user.getId());
 //        userDto.setName(user.getName());
@@ -98,7 +97,6 @@ public class UserServiceImpl implements UserService {
 //        userDto.setAbout(user.getAbout());
 
         UserDto userDto=modelMapper.map(user,UserDto.class);
-
         return userDto;
     }
 
