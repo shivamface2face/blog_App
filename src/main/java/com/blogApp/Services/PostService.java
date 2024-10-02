@@ -14,7 +14,7 @@ public interface PostService {
     PostDto createPost(PostDto postDto, Long cat_Id, Long user_Id);
 
     // update
-    Post updatePost(PostDto postDto,Long id);
+    PostDto updatePost(PostDto postDto,Long id);
 
 
 
@@ -24,21 +24,21 @@ public interface PostService {
 
     // all post
 
-    List<PostDto>getAllPost();
+   List<PostDto>getAllPost();
 
     // singlePost
 
-    Post singlePost(Long id);
+    PostDto singlePost(Long id);
 
     // get post by category
 
-    List<Post>getPostByCategory(Long category_Id);
+    List<PostDto>getPostByCategory(Long category_Id);
 
     // get post by user
 
-    List<Post>getPostByUser(Long user_Id);
+    List<PostDto>getPostByUser(Long user_Id);
 
     // search post
 
-    List<Post>searchPost(String str);
+    List<PostDto>searchPost(String str);
 }

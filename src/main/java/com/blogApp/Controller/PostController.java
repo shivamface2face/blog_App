@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -26,5 +28,52 @@ public class PostController {
         return  new ResponseEntity<PostDto>(caretePost, HttpStatus.CREATED);
 
     }
+
+    //get by user
+
+    @GetMapping("/user/{id}/post")
+    public ResponseEntity<List<PostDto>>getPostByUser(@PathVariable Long id){
+       List<PostDto>postDto=postService.getPostByUser(id);
+        return new ResponseEntity<List<PostDto>>(postDto,HttpStatus.OK);
+    }
+
+    //get by cat
+
+    @GetMapping("/category/{id}/post")
+    public ResponseEntity<List<PostDto>>getPostByCategory(@PathVariable Long id){
+        List<PostDto>postDto=postService.getPostByCategory(id);
+        return new ResponseEntity<List<PostDto>>(postDto,HttpStatus.OK);
+    }
+
+    //All post
+
+    @GetMapping("/post")
+    public ResponseEntity<List<PostDto>>getAllPost(){
+
+     return ResponseEntity.ok(postService.getAllPost());
+    }
+
+    //sigle Post
+
+    @GetMapping("/post/{id}")
+    public ResponseEntity<PostDto>singlePost(@PathVariable Long id){
+        return ResponseEntity.ok(postService.singlePost(id));
+    }
+
+    //delete Post
+
+    @DeleteMapping("/post/{id}")
+    public void deletePost(@PathVariable Long id){
+        postService.deletePost(id);
+    }
+
+    //update the post
+    @PutMapping("/post/{id}")
+    public ResponseEntity<PostDto>updatePost(@RequestBody PostDto postDto,@PathVariable Long id){
+        PostDto updatedPost=postService.updatePost(postDto,id);
+        return ResponseEntity.ok(updatedPost);
+
+    }
+
 
 }

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -46,37 +48,60 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(PostDto postDto, Long id) {
-        return null;
+    public PostDto updatePost(PostDto postDto, Long id) {
+        Post post=postRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("post not found with"+id));
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+        post.setImgName(post.getImgName());
+        Post updatePost=postRepo.save(post);
+        return modelMapper.map(updatePost,PostDto.class);
     }
 
     @Override
     public void deletePost(Long id) {
-
+           postRepo.deleteById(id);
     }
 
     @Override
     public List<PostDto> getAllPost() {
-        return List.of();
+        List<Post>allPost=postRepo.findAll();
+       List<PostDto>getAll=allPost.stream().map((post ->
+                modelMapper.map(post,PostDto.class)
+                )).collect(Collectors.toList());
+       return getAll;
     }
 
     @Override
-    public Post singlePost(Long id) {
-        return null;
+    public PostDto singlePost(Long id) {
+        Post post=postRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("post not found with"+id));
+        return modelMapper.map(post, PostDto.class);
     }
 
     @Override
-    public List<Post> getPostByCategory(Long category_Id) {
-        return List.of();
+    public List<PostDto> getPostByCategory(Long category_Id) {
+
+        Category cat=categoryRepo.findById(category_Id).orElseThrow(()->new ResourceNotFoundException("cat is not found "+category_Id));
+
+        List<Post>posts=postRepo.findByCategory(cat);
+
+        List<PostDto>postDtos=posts.stream().map((post->
+            modelMapper.map(post,PostDto.class)
+        )).collect(Collectors.toList());
+        return postDtos;
     }
 
     @Override
-    public List<Post> getPostByUser(Long user_Id) {
-        return List.of();
+    public List<PostDto> getPostByUser(Long user_Id) {
+        User user=userRepo.findById(user_Id).orElseThrow(()->new ResourceNotFoundException("user is not found with "+user_Id));
+        List<Post>posts=postRepo.findByUser(user);
+        List<PostDto>postDtos=posts.stream().map((post ->
+                modelMapper.map(post, PostDto.class)
+                )).collect(Collectors.toList());
+        return postDtos;
     }
 
     @Override
-    public List<Post> searchPost(String str) {
+    public List<PostDto> searchPost(String str) {
         return List.of();
     }
 }
