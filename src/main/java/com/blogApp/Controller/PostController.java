@@ -1,5 +1,4 @@
 package com.blogApp.Controller;
-
 import com.blogApp.Services.PostService;
 import com.blogApp.Services.impl.PostServiceImpl;
 import com.blogApp.entity.Post;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -86,6 +84,15 @@ public class PostController {
         return ResponseEntity.ok(updatedPost);
 
     }
+
+    // searchPost
+    @GetMapping("/post/search/{key}")
+    public ResponseEntity<List<PostDto>>searchPost(@PathVariable String key){
+     List<PostDto>postDtos=postService.searchPost(key);
+     return new ResponseEntity<>(postDtos,HttpStatus.OK);
+    }
+
+
 
 
 }
