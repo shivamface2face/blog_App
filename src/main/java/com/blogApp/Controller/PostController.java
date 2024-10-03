@@ -58,8 +58,10 @@ public class PostController {
 
     @GetMapping("/post")
     public ResponseEntity<PostResponse>getAllPost(@RequestParam(value ="pageNo",defaultValue = "0")Integer pageNo,
-                                                  @RequestParam(value = "pageSize",defaultValue = "15")Integer pageSize){
-        PostResponse postResponse=postService.getAllPost(pageNo, pageSize);
+                                                  @RequestParam(value = "pageSize",defaultValue = "15")Integer pageSize,
+                                                  @RequestParam(value = "sortBy",defaultValue = "postId",required = false)String sortBy)
+    {
+        PostResponse postResponse=postService.getAllPost(pageNo, pageSize,sortBy);
         return new  ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
     }
 
