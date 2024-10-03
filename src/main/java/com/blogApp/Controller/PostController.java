@@ -48,9 +48,10 @@ public class PostController {
     //All post
 
     @GetMapping("/post")
-    public ResponseEntity<List<PostDto>>getAllPost(){
+    public ResponseEntity<List<PostDto>>getAllPost(@RequestParam(value ="pageNo",defaultValue = "1")Integer pageNo,
+                                                   @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize){
 
-     return ResponseEntity.ok(postService.getAllPost());
+     return ResponseEntity.ok(postService.getAllPost(pageNo,pageSize));
     }
 
     //sigle Post

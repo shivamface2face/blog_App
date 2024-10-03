@@ -24,7 +24,7 @@ public interface PostService {
 
     // all post
 
-   List<PostDto>getAllPost();
+   List<PostDto>getAllPost(Integer pageSize,Integer pageNo);
 
     // singlePost
 

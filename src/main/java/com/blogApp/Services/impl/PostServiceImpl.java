@@ -12,8 +12,11 @@ import com.blogApp.paylods.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,9 +66,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost() {
-        List<Post>allPost=postRepo.findAll();
-       List<PostDto>getAll=allPost.stream().map((post ->
+    public List<PostDto> getAllPost(Integer pageNumber,Integer pageSize) {
+
+        PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Post>posts=postRepo.findAll(pageable);
+        List<Post>allPost=posts.getContent();
+        //        List<Post>allPost=postRepo.findAll();
+        List<PostDto>getAll=allPost.stream().map((post ->
                 modelMapper.map(post,PostDto.class)
                 )).collect(Collectors.toList());
        return getAll;
