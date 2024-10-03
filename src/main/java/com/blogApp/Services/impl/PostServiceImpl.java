@@ -9,6 +9,7 @@ import com.blogApp.entity.Post;
 import com.blogApp.entity.User;
 import com.blogApp.exceptions.ResourceNotFoundException;
 import com.blogApp.paylods.PostDto;
+import com.blogApp.paylods.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +66,23 @@ public class PostServiceImpl implements PostService {
            postRepo.deleteById(id);
     }
 
+
+//    @Override
+//    public List<PostDto> getAllPost(Integer pageNumber,Integer pageSize) {
+//
+//        PageRequest pageable = PageRequest.of(pageNumber, pageSize);
+//        Page<Post>posts=postRepo.findAll(pageable);
+//        List<Post>allPost=posts.getContent();
+//        //        List<Post>allPost=postRepo.findAll();
+//        List<PostDto>getAll=allPost.stream().map((post ->
+//                modelMapper.map(post,PostDto.class)
+//        )).collect(Collectors.toList());
+//        return getAll;
+//    }
+
+
     @Override
-    public List<PostDto> getAllPost(Integer pageNumber,Integer pageSize) {
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
 
         PageRequest pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post>posts=postRepo.findAll(pageable);
@@ -75,7 +91,17 @@ public class PostServiceImpl implements PostService {
         List<PostDto>getAll=allPost.stream().map((post ->
                 modelMapper.map(post,PostDto.class)
                 )).collect(Collectors.toList());
-       return getAll;
+
+        PostResponse postResponse=new PostResponse();
+        postResponse.setContent(getAll);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElement(posts.getTotalElements());
+        postResponse.setTotalPage(posts.getTotalPages());
+        postResponse.setLastPage(posts.isLast());
+
+
+       return postResponse;
     }
 
     @Override

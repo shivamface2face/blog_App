@@ -4,6 +4,7 @@ import com.blogApp.entity.Category;
 import com.blogApp.entity.Post;
 import com.blogApp.entity.User;
 import com.blogApp.paylods.PostDto;
+import com.blogApp.paylods.PostResponse;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public interface PostService {
 
     // all post
 
-   List<PostDto>getAllPost(Integer pageSize,Integer pageNo);
-
+//   List<PostDto>getAllPost(Integer pageSize,Integer pageNo);
+   PostResponse getAllPost(Integer pageSize, Integer pageNo);
     // singlePost
 
     PostDto singlePost(Long id);

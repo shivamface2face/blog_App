@@ -4,6 +4,7 @@ import com.blogApp.Services.PostService;
 import com.blogApp.Services.impl.PostServiceImpl;
 import com.blogApp.entity.Post;
 import com.blogApp.paylods.PostDto;
+import com.blogApp.paylods.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,12 +47,20 @@ public class PostController {
     }
 
     //All post
+//
+//    @GetMapping("/post")
+//    public ResponseEntity<List<PostDto>>getAllPost(@RequestParam(value ="pageNo",defaultValue = "0")Integer pageNo,
+//                                                   @RequestParam(value = "pageSize",defaultValue = "15")Integer pageSize){
+//
+//     return ResponseEntity.ok(postService.getAllPost(pageNo,pageSize));
+//    }
+
 
     @GetMapping("/post")
-    public ResponseEntity<List<PostDto>>getAllPost(@RequestParam(value ="pageNo",defaultValue = "1")Integer pageNo,
-                                                   @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize){
-
-     return ResponseEntity.ok(postService.getAllPost(pageNo,pageSize));
+    public ResponseEntity<PostResponse>getAllPost(@RequestParam(value ="pageNo",defaultValue = "0")Integer pageNo,
+                                                  @RequestParam(value = "pageSize",defaultValue = "15")Integer pageSize){
+        PostResponse postResponse=postService.getAllPost(pageNo, pageSize);
+        return new  ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
     }
 
     //sigle Post
