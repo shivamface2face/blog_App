@@ -1,6 +1,7 @@
 package com.blogApp.Controller;
 import com.blogApp.Services.PostService;
 import com.blogApp.Services.impl.PostServiceImpl;
+import com.blogApp.configs.AppConstant;
 import com.blogApp.entity.Post;
 import com.blogApp.paylods.PostDto;
 import com.blogApp.paylods.PostResponse;
@@ -55,9 +56,9 @@ public class PostController {
 
 
     @GetMapping("/post")
-    public ResponseEntity<PostResponse>getAllPost(@RequestParam(value ="pageNo",defaultValue = "0")Integer pageNo,
-                                                  @RequestParam(value = "pageSize",defaultValue = "15")Integer pageSize,
-                                                  @RequestParam(value = "sortBy",defaultValue = "postId",required = false)String sortBy)
+    public ResponseEntity<PostResponse>getAllPost(@RequestParam(value ="pageNo",defaultValue = AppConstant.PAGE_NUMBER)Integer pageNo,
+                                                  @RequestParam(value = "pageSize",defaultValue = AppConstant.PAZE_SIZE)Integer pageSize,
+                                                  @RequestParam(value = "sortBy",defaultValue = AppConstant.SORT_BY,required = false)String sortBy)
     {
         PostResponse postResponse=postService.getAllPost(pageNo, pageSize,sortBy);
         return new  ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);

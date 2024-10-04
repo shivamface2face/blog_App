@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "post")
@@ -31,6 +31,9 @@ public class Post {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private Set<Comment>comments=new HashSet<>();
 
 
 

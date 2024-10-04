@@ -1,5 +1,6 @@
 package com.blogApp.paylods;
 import com.blogApp.entity.Category;
+import com.blogApp.entity.Comment;
 import com.blogApp.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
@@ -10,6 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,5 +29,7 @@ public class PostDto {
     private Date addDate;
     private CategoryDto category;
     private UserDto user;
+
+    private Set<CommentDto>comments=new HashSet<>();
 
 }
